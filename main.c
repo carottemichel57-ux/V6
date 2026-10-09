@@ -600,6 +600,7 @@ typedef struct {
     char name[20];
 } cfg_t;
 static const char *const CFG_PATHS[] = {
+    "savedata0:saity_v1.cfg",
     "ux0:user/00/savedata/PCSE00491/saity_v1.cfg",
     "ux0:data/saity_v1.cfg", "ur0:data/saity_v1.cfg", "ux0:tai/saity_v1.cfg", "ur0:tai/saity_v1.cfg",
     "uma0:data/saity_v1.cfg", "ux0:temp/saity_v1.cfg",
@@ -781,6 +782,7 @@ static int sd_quiet = 0;
 #define UC_MAGIC 0x31435541u
 static char uc_blob[SD_BUF];                 // format texte : [Nom]\n$xxxx xxxxxxxx xxxxxxxx\n...
 static const char *const UC_PATHS[] = {
+    "savedata0:saity_cheats.dat",
     "ux0:user/00/savedata/PCSE00491/saity_cheats.dat",
     "ux0:data/saity_cheats.dat", "ur0:data/saity_cheats.dat", "ux0:tai/saity_cheats.dat",
     "ur0:tai/saity_cheats.dat", "uma0:data/saity_cheats.dat", "ux0:temp/saity_cheats.dat",

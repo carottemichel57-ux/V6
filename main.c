@@ -12,6 +12,7 @@
 #include <psp2/ctrl.h>
 #include <psp2/io/fcntl.h>
 #include <psp2/io/dirent.h>
+#include <psp2/io/stat.h>
 #include <taihen.h>
 #include <stdint.h>
 #include <string.h>

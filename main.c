@@ -555,7 +555,7 @@ static int sd_done = 0;
 static void tick(void) {
     pg_n = 0; pg_i = 0;                            // les pages verifiees ne valent que pour une frame
     compile_all();
-    if (!sd_done) { sd_done = 1; uc_load(); sd_quiet = 1; sd_reload(); sd_quiet = 0; }    // charge les codes du fichier SD au premier tour
+    /* TEST : SD desactive */    // charge les codes du fichier SD au premier tour
     if (!seg_ok) load_segs();                      // reessaie tant que les segments du jeu ne sont pas lus
     for (int c = 0; c < COUNT(cats); c++) for (int j = 0; j < cats[c].nc; j++) {
         item_t *it = &cats[c].c[j];
@@ -1302,7 +1302,11 @@ static void draw_menu(void) {
             name = T(c->name); ncol = (is_cur || on) ? txt : dim;
             switch (c->kind) {
             case K_CODE:
-                if (c->st == 2) s = "WIP"; else { sw(rx - 34, y + 4, c->on); rw = 34; }
+                if (c->st == 2) s = "WIP";
+                else if (c->grp) {                       /* DIAG pseudo : st, on, ok de la 1re op */
+                    sceClibSnprintf(buf, sizeof(buf), "s%d o%d k%d", c->st, c->on, c->pc < nops ? ops[c->pc].ok : -1);
+                    s = buf; sc2 = acc;
+                } else { sw(rx - 34, y + 4, c->on); rw = 34; }
                 break;
             case K_FLAG: sw(rx - 34, y + 4, *c->var); rw = 34; break;
             case K_CUSTOM:
@@ -1372,7 +1376,7 @@ static int disp_h(const SceDisplayFrameBuf *fb, int sync) {
 static void cats_init(void) {
     int n = COUNT(cats_orig);
     for (int i = 0; i < n - 1; i++) cats[i] = cats_orig[i];
-    cats[n - 1].name = "SD codes"; cats[n - 1].nc = SD_FIX; cats[n - 1].c = sd_items;
+    cats[n - 1].name = "SD codes"; cats[n - 1].nc = 0; cats[n - 1].c = sd_items;
     cats[n] = cats_orig[n - 1];
 }
 
